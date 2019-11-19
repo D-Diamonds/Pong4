@@ -6,8 +6,6 @@ import android.graphics.Paint;
 
 public class Ball {
 
-    //private Canvas canvas;
-    private Paint paint;
     private float width;
     private float height;
     private float radius;
@@ -16,37 +14,56 @@ public class Ball {
     private float dx;
     private float dy;
 
-    public Ball(Canvas canvas, Paint paint, float width, float height) {
-        this.paint = paint;
+    public Ball(float width, float height) {
         this.width = width;
         this.height = height;
-        this.radius = (float) (this.height * .05);
-        this.dx = 10;
-        this.dy = 0;
+        this.radius = (float) (this.height * .03);
         recenter();
-        System.out.println("New Ball created");
-        System.out.println("X:" + this.x);
         
+    }
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getRadius() {
+        return this.radius;
     }
 
     public void recenter() {
         this.x = (float) (this.width * .5 - this.radius);
         this.y = (float) (this.height * .5 - this.radius);
-        //System.out.println("Starting x: " + this.x);
-        this.dx = 10;
+        this.dx = 0;
         this.dy = 0;
     }
 
+    public void startMoving() {
+        int maxDx = 25;
+        int minDx = -25;
+        this.dx = (int) (Math.random() * (maxDx - minDx + 1)) + minDx;
 
-    public void update(float fps) {
-        //System.out.println("Current FPS: " + fps);
-        //System.out.println("Current x: " + this.x);
-        this.x += this.dx / fps;
-        this.y += this.dy / fps;
+        int maxDy = 10;
+        int minDy = -10;
+        this.dy = (int) (Math.random() * (maxDy - minDy + 1)) + minDy;
     }
 
-    public void draw(Canvas canvas) {
-        this.paint.setColor(Color.BLUE);
-        canvas.drawCircle(this.x, this.y, this.radius, this.paint);
+
+    public void update(float dt) {
+        this.x += this.dx * dt;
+        this.y += this.dy * dt;
+        if (this.y - this.radius < 0) {
+            this.y = this.radius;
+            this.dy = -this.dy;
+        }
+        if (this.y > this.height - this.radius) {
+            this.y = this.height - this.radius;
+            this.dy = -this.dy;
+        }
+        //System.out.println("Current x: " + this.x);
+    }
+
+    public void draw(Canvas canvas, Paint paint) {
+        paint.setColor(Color.BLUE);
+        canvas.drawCircle(this.x, this.y, this.radius, paint);
     }
 }

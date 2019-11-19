@@ -7,6 +7,9 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -16,21 +19,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Display display = getWindowManager().getDefaultDisplay();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-    }
+        this.pongView = findViewById(R.id.pongView);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
 
-        pongView.resume();
-    }
+        findViewById(R.id.resetBtn).setOnClickListener(this.pongView);
+        findViewById(R.id.startBtn).setOnClickListener(this.pongView);
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        pongView.pause();
     }
 }
