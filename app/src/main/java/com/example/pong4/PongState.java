@@ -32,7 +32,7 @@ public class PongState {
 
     public void reset() {
         this.ball = new Ball(this.screenWidth, this.screenHeight);
-        double width = this.screenWidth * .05;
+        double width = this.screenWidth * .01;
         double height = this.screenHeight * .3;
 
         this.player1 = new Paddle(this.screenWidth, this.screenHeight, width, height, this.screenWidth * .1 - width, this.screenHeight * .5 - height / 2, "human");
@@ -48,6 +48,16 @@ public class PongState {
         this.ball.update(dt);
         this.player1.update(dt);
         this.player2.update(dt);
+
+        if (this.ball.collides(this.player1)) {
+            this.ball.setDx(-this.ball.getDx() * 1.02f);
+            this.ball.setX(this.ball.getX() + this.ball.getRadius());
+        }
+
+        if (this.ball.collides(this.player2)) {
+            this.ball.setDx(-this.ball.getDx() * 1.02f);
+            this.ball.setX(this.ball.getX() - this.ball.getRadius());
+        }
 
         if (this.ball.getX() < -this.ball.getRadius()) {
             this.player2.incrementScore();

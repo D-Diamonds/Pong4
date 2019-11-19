@@ -87,9 +87,9 @@ public class PongView extends SurfaceView implements SurfaceHolder.Callback, Vie
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN) {
-            if (event.getY() >= getHeight() * .5)
+            if (event.getX() >= getWidth() * .5)
                 this.thread.getPongState().setDirection("down");
-            else if (event.getY() < getHeight() * .5)
+            else if (event.getX() < getWidth() * .5)
                 this.thread.getPongState().setDirection("up");
 
         }

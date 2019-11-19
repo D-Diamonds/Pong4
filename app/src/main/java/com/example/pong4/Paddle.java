@@ -3,7 +3,6 @@ package com.example.pong4;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 
 public class Paddle {
 
@@ -34,10 +33,27 @@ public class Paddle {
         return this.score;
     }
 
+    public float getY() {
+        return this.y;
+    }
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getWidth() {
+        return this.width;
+    }
+
+    public float getHeight() {
+        return this.height;
+    }
+
     public void incrementScore() {
         this.score++;
         System.out.println("Score incremented!");
     }
+
 
     public void update(float dt) {
         //System.out.println(this.y);

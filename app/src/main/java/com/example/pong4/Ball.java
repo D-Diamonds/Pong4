@@ -6,8 +6,8 @@ import android.graphics.Paint;
 
 public class Ball {
 
-    private float width;
-    private float height;
+    private float screenWidth;
+    private float screenHeight;
     private float radius;
     private float x;
     private float y;
@@ -15,9 +15,9 @@ public class Ball {
     private float dy;
 
     public Ball(float width, float height) {
-        this.width = width;
-        this.height = height;
-        this.radius = (float) (this.height * .03);
+        this.screenWidth = width;
+        this.screenHeight = height;
+        this.radius = (float) (this.screenHeight * .03);
         recenter();
         
     }
@@ -26,25 +26,51 @@ public class Ball {
         return this.x;
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
+    public void setDx(float dx) {
+        this.dx = dx;
+    }
+
+    public float getDx() {
+        return this.dx;
+    }
+
     public float getRadius() {
         return this.radius;
     }
 
     public void recenter() {
-        this.x = (float) (this.width * .5 - this.radius);
-        this.y = (float) (this.height * .5 - this.radius);
+        this.x = (float) (this.screenWidth * .5 - this.radius);
+        this.y = (float) (this.screenHeight * .5 - this.radius);
         this.dx = 0;
         this.dy = 0;
     }
 
-    public void startMoving() {
-        int maxDx = 25;
-        int minDx = -25;
-        this.dx = (int) (Math.random() * (maxDx - minDx + 1)) + minDx;
+    public boolean collides(Paddle paddle) {
+        if (this.x - this.radius > paddle.getX() + paddle.getWidth() || paddle.getX() > this.x + this.radius)
+            return false;
+        if (this.y > paddle.getY() + paddle.getHeight() || paddle.getY() > this.y + this.radius)
+            return false;
+        return true;
+    }
 
-        int maxDy = 10;
-        int minDy = -10;
-        this.dy = (int) (Math.random() * (maxDy - minDy + 1)) + minDy;
+    public void startMoving() {
+        if (this.dx == 0 && this.dy == 0) {
+            int maxDx = 10;
+            int minDx = -10;
+            this.dx = (int) (Math.random() * (maxDx - minDx + 1)) + minDx;
+
+            int maxDy = 5;
+            int minDy = -5;
+            this.dy = (int) (Math.random() * (maxDy - minDy + 1)) + minDy;
+        }
     }
 
 
@@ -55,8 +81,8 @@ public class Ball {
             this.y = this.radius;
             this.dy = -this.dy;
         }
-        if (this.y > this.height - this.radius) {
-            this.y = this.height - this.radius;
+        if (this.y + this.radius >= this.screenHeight) {
+            this.y = this.screenHeight - this.radius;
             this.dy = -this.dy;
         }
         //System.out.println("Current x: " + this.x);

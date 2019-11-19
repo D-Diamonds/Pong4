@@ -1,15 +1,8 @@
 package com.example.pong4;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
